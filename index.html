@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Happy Birthday, My Love 🌸</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lora:ital,wght@0,400;0,500;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+
+/* ─────────────────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────────────────── */
+:root {
+  --font-display:  'Playfair Display', serif;
+  --font-body:     'Lora', serif;
+  --font-elegant:  'Cormorant Garamond', serif;
+  --font-mono:     'DM Mono', monospace;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body {
+  width:100%; height:100%; overflow:hidden;
+  font-family: var(--font-body);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+/* ─────────────────────────────────────────────────────
+   PHASE SYSTEM
+   display:none until active. Only one active at a time.
+   Nothing overlaps — zero bleeding between phases.
+───────────────────────────────────────────────────── */
+.phase {
+  position: fixed; inset: 0;
+  display: none;
+  opacity: 0;
+}
+.phase.active {
+  display: flex;
+  animation: phFadeIn 0.75s ease forwards;
+}
+@keyframes phFadeIn { from{opacity:0} to{opacity:1} }
+
+/* ─────────────────────────────────────────────────────
+   PHASE 1 — BOOT
+───────────────────────────────────────────────────── */
+#phase1 {
+  flex-direction:column; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,#060614 0%,#0f0a2a 30%,#0a1530 60%,#140820 100%);
+  background-size:400% 400%;
+  animation: gradDrift 12s ease infinite, phFadeIn 0.75s ease forwards;
+}
+@keyframes gradDrift {
+  0%  {background-position:0% 50%}
+  50% {background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+#p1Stars,.p1-landscape,.p1-glow,.p1-moon { position:absolute; pointer-events:none; }
+#p1Stars { inset:0; overflow:hidden; }
+.boot-star {
+  position:absolute; background:#fff; border-radius:50%;
+  animation:bTwinkle var(--d,3s) ease-in-out infinite var(--dl,0s);
+}
+@keyframes bTwinkle {
+  0%,100%{opacity:.1;transform:scale(.8)} 50%{opacity:var(--mo,.7);transform:scale(1.2)}
+}
+.p1-landscape { bottom:0;left:0;right:0;height:35%;overflow:hidden; }
+.p1-landscape::before {
+  content:'';position:absolute;bottom:0;left:-5%;right:-5%;height:100%;
+  background:linear-gradient(to top,#0a0515 0%,#110d2a 50%,transparent 100%);
+  clip-path:polygon(0% 100%,5% 55%,15% 70%,25% 30%,35% 55%,45% 20%,55% 45%,65% 25%,75% 55%,85% 35%,95% 50%,100% 40%,100% 100%);
+}
+.p1-landscape::after {
+  content:'';position:absolute;bottom:0;left:0;right:0;height:40%;
+  background:linear-gradient(to top,#0f0818 0%,#150d28 60%,transparent 100%);
+}
+.p1-glow {
+  bottom:20%;left:50%;transform:translateX(-50%);width:60%;height:200px;
+  background:radial-gradient(ellipse,rgba(200,140,60,.15) 0%,transparent 70%);
+}
+.p1-moon {
+  top:12%;right:18%;width:60px;height:60px;
+  background:radial-gradient(circle at 40% 40%,#f0e8d0,#c8b878);border-radius:50%;
+  box-shadow:0 0 30px 10px rgba(240,220,160,.25),0 0 80px 30px rgba(200,180,100,.1);
+  animation:moonPulse 6s ease-in-out infinite;
+}
+@keyframes moonPulse {
+  0%,100%{box-shadow:0 0 30px 10px rgba(240,220,160,.25),0 0 80px 30px rgba(200,180,100,.1)}
+  50%{box-shadow:0 0 40px 15px rgba(240,220,160,.35),0 0 100px 40px rgba(200,180,100,.15)}
+}
+.p1-content {
+  position:relative;z-index:5;display:flex;flex-direction:column;align-items:center;gap:28px;
+}
+.p1-icon { font-size:2.2rem; animation:heartbeat 2s ease-in-out infinite; filter:drop-shadow(0 0 12px rgba(217,104,120,.7)); }
+@keyframes heartbeat {
+  0%,100%{transform:scale(1)} 14%{transform:scale(1.15)} 28%{transform:scale(1)} 42%{transform:scale(1.08)} 56%{transform:scale(1)}
+}
+.p1-title {
+  font-family:var(--font-elegant);font-size:clamp(.92rem,4vw,1.45rem);
+  font-weight:300;font-style:italic;color:rgba(245,220,168,.75);
+  letter-spacing:.15em;text-align:center;padding:0 20px;
+}
+.loader-wrap { display:flex;flex-direction:column;align-items:center;gap:14px; }
+.loader-track {
+  width:min(300px,78vw);height:6px;background:rgba(255,255,255,.08);
+  border-radius:10px;border:1px solid rgba(255,255,255,.1);overflow:hidden;
+}
+.loader-fill {
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#8858c8,#c87898,#e8b858,#c89858);
+  background-size:200% 100%;
+  animation:shimmer 2s linear infinite;
+  box-shadow:0 0 12px rgba(200,120,152,.6);transition:width .12s ease;
+}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.loader-text {
+  font-family:var(--font-mono);font-size:.75rem;font-weight:300;
+  color:rgba(220,190,140,.62);letter-spacing:.1em;min-height:1.2em;transition:opacity .35s ease;
+}
+
+/* ─────────────────────────────────────────────────────
+   PHASE 2 — COZY ROOM
+───────────────────────────────────────────────────── */
+#phase2 { align-items:center;justify-content:center;overflow:hidden;background:#07071a; }
+
+/* ALL decorative layers — pointer-events:none, no exceptions */
+.room-bg,.room-window,.room-floor,.room-rug,.room-candle,#p2Stars,#p2Particles {
+  pointer-events:none !important;
+}
+.room-bg {
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 80%,rgba(160,90,30,.18) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 50% 0%,rgba(40,60,140,.25) 0%,transparent 60%),
+    linear-gradient(180deg,#06061a 0%,#0a0820 40%,#100c18 70%,#0e0810 100%);
+}
+.room-window {
+  position:absolute;top:5%;right:8%;
+  width:clamp(80px,11vw,140px);height:clamp(100px,14vw,180px);
+  background:radial-gradient(ellipse at 50% 30%,rgba(80,120,200,.35) 0%,rgba(40,70,160,.15) 50%,transparent 100%);
+  border:1.5px solid rgba(120,160,220,.25);border-radius:60px 60px 4px 4px;
+  box-shadow:0 0 40px 10px rgba(70,110,200,.12),inset 0 0 30px rgba(100,140,220,.1);overflow:hidden;
+}
+.room-window::before {
+  content:'';position:absolute;inset:12px;
+  border:1px solid rgba(180,200,240,.15);border-radius:48px 48px 2px 2px;
+}
+.room-window::after {
+  content:'';position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(180,200,240,.15);
+}
+.window-cross {
+  position:absolute;top:50%;left:0;right:0;height:1px;
+  background:rgba(180,200,240,.15);transform:translateY(-50%);
+}
+.room-floor {
+  position:absolute;bottom:0;left:0;right:0;height:28%;
+  background:linear-gradient(to top,#0a0608 0%,#130e0a 50%,transparent 100%);
+}
+.room-floor::before {
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(255,200,100,.025) 40px,rgba(255,200,100,.025) 41px);
+}
+.room-rug {
+  position:absolute;bottom:8%;left:50%;transform:translateX(-50%);
+  width:clamp(200px,45vw,500px);height:clamp(70px,14vw,160px);
+  background:radial-gradient(ellipse,rgba(120,40,80,.25) 0%,rgba(80,30,60,.15) 50%,transparent 80%);
+  border-radius:50%;
+}
+#p2Stars { position:absolute;inset:0; }
+.room-star {
+  position:absolute;background:#fff;border-radius:50%;
+  animation:roomTwinkle var(--d) ease-in-out infinite var(--dl);
+}
+@keyframes roomTwinkle { 0%,100%{opacity:.07} 50%{opacity:var(--mo,.45)} }
+#p2Particles { position:absolute;inset:0; }
+.particle {
+  position:absolute;border-radius:50%;background:rgba(255,220,150,.38);
+  animation:floatUp var(--d) ease-in-out infinite var(--dl);opacity:0;
+}
+@keyframes floatUp {
+  0%{transform:translateY(0) translateX(0);opacity:0} 20%{opacity:.45}
+  80%{opacity:.18} 100%{transform:translateY(-110px) translateX(var(--dx,15px));opacity:0}
+}
+.room-candle {
+  position:absolute;bottom:27%;left:8%;
+  display:flex;flex-direction:column;align-items:center;
+}
+.candle-flame-wrap { position:relative;width:20px;height:36px; }
+.candle-glow {
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:60px;height:60px;
+  background:radial-gradient(circle,rgba(255,180,60,.25) 0%,transparent 70%);
+  animation:glowPulse 2s ease-in-out infinite;
+}
+@keyframes glowPulse{0%,100%{opacity:.7;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.2)}}
+.candle-flame {
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:14px;height:28px;
+  background:radial-gradient(ellipse at 50% 60%,#fff 0%,#ffe070 30%,#ff9020 60%,transparent 100%);
+  border-radius:50% 50% 40% 40%;animation:flicker .8s ease-in-out infinite alternate;filter:blur(.5px);
+}
+.candle-flame-inner {
+  position:absolute;bottom:3px;left:50%;transform:translateX(-50%);
+  width:6px;height:14px;
+  background:radial-gradient(ellipse,#fff 0%,#ffeea0 50%,transparent 100%);
+  border-radius:50%;animation:flickerIn .6s ease-in-out infinite alternate;
+}
+@keyframes flicker{0%{transform:translateX(-50%) scaleX(1) rotate(-2deg)}100%{transform:translateX(-50%) scaleX(.88) scaleY(1.08) rotate(2deg)}}
+@keyframes flickerIn{0%{opacity:.8;transform:translateX(-50%) scaleY(1)}100%{opacity:1;transform:translateX(-50%) scaleY(.9)}}
+.candle-body {
+  width:18px;height:60px;
+  background:linear-gradient(180deg,#e8d8b8,#d0c090 50%,#b8a870);
+  border-radius:3px 3px 2px 2px;box-shadow:0 4px 12px rgba(0,0,0,.4);position:relative;
+}
+.candle-body::before {
+  content:'';position:absolute;top:0;left:25%;width:25%;height:100%;
+  background:rgba(255,255,255,.25);border-radius:2px;
+}
+.candle-wax {
+  width:24px;height:6px;
+  background:linear-gradient(to bottom,#d0c080,#a88848);
+  border-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.5);
+}
+
+/* ── GIFT BOXES — clickable, always above decorative layers ── */
+.gift-box {
+  position:absolute;width:72px;height:68px;
+  z-index:40;               /* well above everything decorative */
+  cursor:pointer;
+  transition:transform .3s cubic-bezier(.34,1.56,.64,1),filter .3s;
+  animation:giftFloat var(--fd,4s) ease-in-out infinite var(--fdl,0s);
+  -webkit-tap-highlight-color:transparent;
+}
+@keyframes giftFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.gift-box:hover  { filter:brightness(1.14); }
+.gift-box:active { transform:scale(.93) !important; }
+
+.gift-lid {
+  width:100%;height:20%;border-radius:6px 6px 0 0;
+  background:inherit;filter:brightness(1.15);
+  box-shadow:0 -2px 8px rgba(0,0,0,.3);position:relative;
+}
+.gift-bow {
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  width:28px;height:16px;display:flex;align-items:center;justify-content:center;
+}
+.gift-bow::before,.gift-bow::after {
+  content:'';position:absolute;width:13px;height:10px;
+  background:rgba(255,255,255,.85);border-radius:50% 0 50% 0;
+}
+.gift-bow::before{left:0;transform:rotate(-30deg)}
+.gift-bow::after {right:0;transform:rotate(30deg) scaleX(-1)}
+.gift-body {
+  width:100%;height:80%;border-radius:0 0 6px 6px;
+  background:inherit;overflow:hidden;position:relative;
+  box-shadow:0 8px 24px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.2);
+}
+.gift-body::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:40%;
+  background:linear-gradient(to bottom,rgba(255,255,255,.18),transparent);
+}
+.gift-ribbon-h{position:absolute;top:50%;left:0;right:0;height:10px;transform:translateY(-50%);background:rgba(255,255,255,.5);}
+.gift-ribbon-v{position:absolute;left:50%;top:0;bottom:0;width:10px;transform:translateX(-50%);background:rgba(255,255,255,.5);}
+
+/* Gift positions & colors */
+#gift1{top:18%;left:6%; --fd:4.2s;--fdl:0s;}
+#gift2{top:15%;right:18%;--fd:3.8s;--fdl:.5s;}
+#gift3{top:55%;left:5%; --fd:4.6s;--fdl:1s;}
+#gift4{top:50%;right:6%;--fd:4s;  --fdl:1.5s;}
+#gift5{top:78%;left:38%;--fd:5s;  --fdl:.8s;}
+#gift1 .gift-lid,#gift1 .gift-body{background:linear-gradient(135deg,#c84868,#e87890);}
+#gift2 .gift-lid,#gift2 .gift-body{background:linear-gradient(135deg,#3868b8,#5898e8);}
+#gift3 .gift-lid,#gift3 .gift-body{background:linear-gradient(135deg,#386840,#68b870);}
+#gift4 .gift-lid,#gift4 .gift-body{background:linear-gradient(135deg,#a07828,#e0b848);}
+#gift5 .gift-lid,#gift5 .gift-body{background:linear-gradient(135deg,#6838a8,#9868d8);}
+
+/* ── VAULT ── */
+.vault-wrap {
+  position:absolute;bottom:25%;right:7%;z-index:40;
+  cursor:pointer;animation:giftFloat 5s ease-in-out infinite 1s;
+  -webkit-tap-highlight-color:transparent;
+}
+.vault-hint {
+  font-family:var(--font-mono);font-size:.54rem;
+  color:rgba(200,180,120,.42);text-align:center;margin-bottom:6px;
+  pointer-events:none;animation:hintPulse 3s ease-in-out infinite;
+}
+@keyframes hintPulse{0%,100%{opacity:.38}50%{opacity:.88}}
+.vault-outer {
+  width:clamp(68px,9vw,90px);height:clamp(68px,9vw,90px);
+  background:radial-gradient(circle at 35% 30%,#555,#222);
+  border-radius:14px;border:2px solid #666;
+  box-shadow:0 8px 24px rgba(0,0,0,.7),inset 0 1px 0 rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  transition:filter .25s,transform .25s;
+}
+.vault-outer::before {
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.08) 0%,transparent 50%);
+}
+.vault-wrap:hover  .vault-outer{filter:brightness(1.14);transform:scale(1.05);}
+.vault-wrap:active .vault-outer{transform:scale(.95);}
+.vault-dial {
+  width:42px;height:42px;
+  background:radial-gradient(circle at 35% 30%,#888,#333);
+  border-radius:50%;border:2px solid #555;
+  box-shadow:0 2px 8px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.1);
+  animation:dialSpin 8s linear infinite;position:relative;
+}
+@keyframes dialSpin{to{transform:rotate(360deg)}}
+.vault-dial::after{content:'—';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);color:rgba(255,255,255,.48);font-size:1.2rem;line-height:1;}
+.vault-handle {
+  position:absolute;right:10px;top:50%;transform:translateY(-50%);
+  width:8px;height:24px;
+  background:linear-gradient(180deg,#999,#555);
+  border-radius:4px;box-shadow:0 2px 6px rgba(0,0,0,.5);
+}
+.vault-label{font-family:var(--font-mono);font-size:.54rem;text-align:center;margin-top:6px;color:rgba(180,160,130,.42);pointer-events:none;}
+
+/* ── NOTE CARD — PURELY VISUAL, zero pointer events ── */
+.note-card {
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:min(460px,80vw);
+  z-index:10;
+  pointer-events:none !important; /* blocks NOTHING underneath */
+}
+.note-glow {
+  position:absolute;inset:-30px;
+  background:radial-gradient(ellipse,rgba(200,150,60,.1) 0%,transparent 70%);
+  pointer-events:none;
+}
+.note-inner {
+  background:linear-gradient(160deg,#fdf6e8 0%,#f5e6c8 40%,#ede0b8 100%);
+  border-radius:12px;padding:clamp(18px,3vw,34px) clamp(16px,3.5vw,38px);
+  box-shadow:0 20px 60px rgba(0,0,0,.52),0 0 0 1px rgba(200,160,80,.28),inset 0 1px 0 rgba(255,255,255,.8);
+  position:relative;overflow:hidden;pointer-events:none;
+}
+.note-inner::before {
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(160,120,60,.07) 27px,rgba(160,120,60,.07) 28px);
+}
+.note-inner::after{content:'❦';position:absolute;top:10px;right:16px;font-size:1.5rem;color:rgba(180,130,60,.26);}
+.note-label{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.2em;color:rgba(160,110,50,.62);text-transform:uppercase;margin-bottom:10px;}
+.note-title{font-family:var(--font-display);font-size:clamp(1.05rem,3vw,1.55rem);font-weight:700;font-style:italic;color:#6a3a18;margin-bottom:12px;line-height:1.2;}
+.note-text{font-family:var(--font-body);font-size:clamp(.78rem,2vw,.9rem);line-height:1.8;color:#4a3020;font-style:italic;}
+.note-sig{margin-top:12px;font-family:var(--font-display);font-size:.98rem;font-style:italic;color:#8a4828;text-align:right;}
+
+/* ─────────────────────────────────────────────────────
+   PHASE 3 — NEBULA
+───────────────────────────────────────────────────── */
+#phase3{align-items:center;justify-content:center;flex-direction:column;background:#08050f;}
+#nebulaCanvas{position:absolute;inset:0;pointer-events:none;}
+.p3-content{position:relative;z-index:5;text-align:center;padding:32px 24px;max-width:580px;}
+.p3-eyebrow{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.25em;color:rgba(200,170,240,.42);text-transform:uppercase;margin-bottom:22px;}
+.p3-msg{font-family:var(--font-elegant);font-size:clamp(1.25rem,5vw,2.2rem);font-weight:300;font-style:italic;color:rgba(240,230,255,.88);line-height:1.58;text-shadow:0 0 40px rgba(180,140,240,.32);}
+.p3-dots{margin-top:36px;display:flex;gap:10px;justify-content:center;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(200,160,240,.22);transition:background .4s,transform .3s;}
+.dot.on{background:rgba(200,160,240,.88);transform:scale(1.4);}
+
+/* ─────────────────────────────────────────────────────
+   PHASE 4 — OPEN BOOK
+───────────────────────────────────────────────────── */
+#phase4{align-items:center;justify-content:center;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  background:linear-gradient(160deg,#0a1410 0%,#0e1e18 40%,#0d1a14 70%,#080f0c 100%);}
+.p4-bg{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 80% 50% at 50% 100%,rgba(20,80,50,.26) 0%,transparent 60%);}
+#p4Stars{position:absolute;inset:0;pointer-events:none;}
+
+.open-book{
+  position:relative;z-index:5;display:flex;width:min(820px,94vw);flex-shrink:0;margin:auto;
+  filter:drop-shadow(0 40px 80px rgba(0,0,0,.72));
+  animation:bookFloat 6s ease-in-out infinite;
+}
+@keyframes bookFloat{0%,100%{transform:translateY(0) rotate(-.3deg)}50%{transform:translateY(-8px) rotate(.3deg)}}
+.page-l,.page-r{
+  flex:1;padding:clamp(22px,4vw,46px) clamp(18px,3.5vw,38px);
+  background:linear-gradient(160deg,#fdf8f0 0%,#f5e8d0 60%,#ede0bc 100%);
+  position:relative;overflow:hidden;
+}
+.page-l{border-radius:16px 0 0 16px;border-right:2px solid rgba(180,140,80,.2);}
+.page-r{border-radius:0 16px 16px 0;}
+.page-l::before,.page-r::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 27px,rgba(140,100,50,.06) 27px,rgba(140,100,50,.06) 28px);
+}
+.book-spine{width:24px;flex-shrink:0;z-index:2;background:linear-gradient(180deg,#a07840,#7a5828,#a07840);box-shadow:inset -3px 0 8px rgba(0,0,0,.3),inset 3px 0 8px rgba(0,0,0,.3);display:flex;align-items:center;justify-content:center;}
+.spine-text{font-family:var(--font-elegant);font-size:.5rem;letter-spacing:.14em;color:rgba(255,230,160,.42);writing-mode:vertical-rl;text-orientation:mixed;}
+.page-l-inner{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;align-items:center;pointer-events:none;}
+.page-ornament{font-size:1.8rem;color:rgba(160,100,40,.42);margin-bottom:12px;}
+.page-l-title{font-family:var(--font-display);font-size:clamp(1.05rem,3vw,1.5rem);font-style:italic;font-weight:700;color:#5a3015;text-align:center;margin-bottom:14px;line-height:1.2;}
+.page-l-date{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.13em;color:rgba(160,100,50,.52);text-transform:uppercase;margin-bottom:22px;}
+.page-l-deco{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
+.page-rose{font-size:3.5rem;animation:rosePulse 4s ease-in-out infinite;}
+@keyframes rosePulse{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.06) rotate(5deg)}}
+.page-l-quote{font-family:var(--font-elegant);font-size:clamp(.82rem,2vw,.96rem);font-style:italic;color:rgba(100,60,20,.52);text-align:center;line-height:1.7;max-width:200px;}
+.page-stars{color:rgba(200,150,60,.42);font-size:.72rem;letter-spacing:4px;}
+.page-r-inner{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;}
+.page-r-label{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.18em;color:rgba(150,100,40,.46);text-transform:uppercase;margin-bottom:6px;}
+.page-r-title{font-family:var(--font-display);font-size:clamp(1.05rem,3vw,1.4rem);font-style:italic;color:#4a2e10;margin-bottom:18px;line-height:1.2;}
+.page-divider{height:1px;margin-bottom:22px;background:linear-gradient(90deg,transparent,rgba(160,110,50,.26),transparent);}
+.book-btns{display:flex;flex-direction:column;gap:14px;}
+
+/* Book buttons — clearly interactive */
+.book-btn{
+  display:block;width:100%;padding:clamp(12px,2vw,16px) 20px;
+  border:1.5px solid;border-radius:10px;background:transparent;
+  cursor:pointer;text-align:left;
+  font-family:var(--font-elegant);font-size:clamp(.98rem,2.5vw,1.1rem);
+  font-style:italic;letter-spacing:.04em;
+  transition:transform .22s cubic-bezier(.34,1.56,.64,1),box-shadow .22s,border-color .22s,background .22s;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;overflow:hidden;
+}
+.book-btn:hover {transform:translateY(-3px);}
+.book-btn:active{transform:scale(.96);}
+.btn-poem  {border-color:rgba(120,80,160,.32);color:#5a3888;}
+.btn-poem:hover  {border-color:rgba(120,80,160,.68);background:rgba(120,80,160,.06);box-shadow:0 8px 22px rgba(120,80,160,.16);}
+.btn-secret{border-color:rgba(180,90,100,.32);color:#8a3840;}
+.btn-secret:hover{border-color:rgba(180,90,100,.68);background:rgba(180,90,100,.06);box-shadow:0 8px 22px rgba(180,90,100,.16);}
+.btn-icon{margin-right:8px;}
+.btn-sub{display:block;font-size:.6rem;font-style:normal;font-family:var(--font-mono);letter-spacing:.1em;opacity:.42;margin-top:3px;}
+.page-r-footer{margin-top:auto;padding-top:18px;font-family:var(--font-elegant);font-size:.84rem;font-style:italic;color:rgba(120,80,40,.42);text-align:center;pointer-events:none;}
+
+/* ─────────────────────────────────────────────────────
+   MODALS
+   position:fixed, z-index:500 — well above all phases.
+   display:none by default. .open → display:flex.
+───────────────────────────────────────────────────── */
+.modal-bg{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(5,4,18,.84);backdrop-filter:blur(10px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal-bg.open{display:flex;animation:mFadeIn .2s ease;}
+@keyframes mFadeIn{from{opacity:0}to{opacity:1}}
+
+/* Shared close X */
+.m-close{
+  position:absolute;top:12px;right:15px;
+  font-size:1.35rem;color:rgba(120,80,40,.44);cursor:pointer;
+  font-family:sans-serif;line-height:1;
+  padding:8px;               /* big tap target */
+  transition:color .18s,transform .18s;
+  -webkit-tap-highlight-color:transparent;
+}
+.m-close:hover{color:rgba(120,80,40,.9);transform:scale(1.2) rotate(90deg);}
+
+/* Gift modal */
+.modal-card{
+  background:linear-gradient(160deg,#fdf6e8,#f0e4c0);
+  border-radius:20px;padding:clamp(26px,5vw,40px);max-width:400px;width:100%;
+  box-shadow:0 30px 80px rgba(0,0,0,.62),0 0 0 1px rgba(200,160,80,.2);
+  text-align:center;position:relative;
+  animation:popIn .3s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes popIn{from{transform:scale(.72);opacity:0}to{transform:scale(1);opacity:1}}
+.m-icon{font-size:2.4rem;margin-bottom:10px;}
+.m-msg{font-family:var(--font-body);font-style:italic;font-size:1.04rem;line-height:1.7;color:#4a3020;}
+.m-tag{margin-top:10px;font-family:var(--font-mono);font-size:.6rem;letter-spacing:.14em;color:rgba(150,100,50,.46);text-transform:uppercase;}
+
+/* Vault modal */
+.vault-modal-card{
+  background:linear-gradient(160deg,#fdf6e8,#f0e4c0);
+  border-radius:20px;padding:clamp(26px,5vw,40px);max-width:400px;width:100%;
+  box-shadow:0 30px 80px rgba(0,0,0,.62),0 0 0 1px rgba(200,160,80,.2);
+  text-align:center;position:relative;
+  animation:popIn .3s cubic-bezier(.34,1.56,.64,1);
+}
+.v-icon{font-size:2.8rem;margin-bottom:8px;}
+.v-title{font-family:var(--font-display);font-size:1.3rem;color:#3a2010;margin-bottom:8px;}
+.v-hint{font-family:var(--font-body);font-size:.84rem;font-style:italic;color:rgba(100,70,30,.66);margin-bottom:18px;line-height:1.55;}
+.v-hint em{font-style:normal;font-weight:500;color:rgba(160,100,40,.88);}
+#vaultInput{
+  width:100%;padding:12px 16px;margin-bottom:12px;
+  border:1.5px solid rgba(180,130,60,.36);border-radius:10px;
+  background:rgba(255,240,200,.52);outline:none;
+  font-family:var(--font-mono);font-size:16px;/* 16px = no iOS zoom */
+  color:#3a2010;text-align:center;letter-spacing:.08em;
+  transition:border-color .2s,box-shadow .2s;
+}
+#vaultInput:focus{border-color:rgba(180,130,60,.76);box-shadow:0 0 0 3px rgba(180,130,60,.1);}
+#vaultInput::placeholder{color:rgba(160,100,50,.36);font-style:italic;}
+#vaultSubmit{
+  width:100%;padding:12px;border:none;border-radius:10px;cursor:pointer;
+  background:linear-gradient(135deg,#8848c8,#b858a8);color:#fff;
+  font-family:var(--font-body);font-size:.94rem;font-style:italic;letter-spacing:.04em;
+  box-shadow:0 4px 16px rgba(136,72,200,.36);
+  transition:transform .2s,box-shadow .2s;-webkit-tap-highlight-color:transparent;
+}
+#vaultSubmit:hover {transform:translateY(-2px);box-shadow:0 8px 24px rgba(136,72,200,.46);}
+#vaultSubmit:active{transform:scale(.96);}
+
+/* Poem / scroll modal */
+.scroll-card{
+  background:linear-gradient(180deg,#fdf8f0 0%,#f5e8d0 100%);
+  border-radius:4px;padding:clamp(34px,5vw,54px) clamp(22px,4vw,46px);
+  max-width:480px;width:100%;max-height:82vh;overflow-y:auto;
+  position:relative;
+  box-shadow:0 40px 100px rgba(0,0,0,.72),0 0 0 1px rgba(200,160,80,.2);
+  animation:scrollUnfurl .45s cubic-bezier(.34,1.2,.64,1);
+  -webkit-overflow-scrolling:touch;
+}
+@keyframes scrollUnfurl{from{transform:scaleY(.2) translateY(-22px);opacity:0}to{transform:scaleY(1);opacity:1}}
+.scroll-card::before,.scroll-card::after{
+  content:'';position:absolute;left:0;right:0;height:16px;
+  background:linear-gradient(180deg,#c89040,#a07030);
+}
+.scroll-card::before{top:0;border-radius:4px 4px 0 0;}
+.scroll-card::after {bottom:0;border-radius:0 0 4px 4px;}
+.scroll-title{font-family:var(--font-display);font-size:1.3rem;font-style:italic;color:#4a2e10;text-align:center;margin-bottom:22px;}
+.scroll-div{text-align:center;color:rgba(160,110,50,.42);margin:0 auto 22px;display:flex;align-items:center;gap:12px;}
+.scroll-div::before,.scroll-div::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(160,110,50,.26));}
+.scroll-div::after{background:linear-gradient(90deg,rgba(160,110,50,.26),transparent);}
+.poem-text{font-family:var(--font-elegant);font-size:clamp(.92rem,2.5vw,1.04rem);line-height:2;color:#3a2010;text-align:center;font-style:italic;white-space:pre-line;}
+.scroll-close-btn{
+  display:block;margin:22px auto 0;padding:10px 28px;
+  background:linear-gradient(135deg,#8848a8,#a858a0);border:none;border-radius:8px;
+  color:#fff;font-family:var(--font-body);font-style:italic;font-size:.9rem;cursor:pointer;
+  box-shadow:0 4px 16px rgba(136,72,168,.36);transition:transform .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.scroll-close-btn:hover {transform:translateY(-2px);}
+.scroll-close-btn:active{transform:scale(.96);}
+
+/* Secret modal */
+.secret-card{
+  background:linear-gradient(160deg,#0a0820 0%,#12102a 100%);
+  border-radius:20px;padding:clamp(30px,5vw,50px) clamp(22px,4vw,42px);
+  max-width:456px;width:100%;text-align:center;
+  box-shadow:0 40px 100px rgba(0,0,0,.86),0 0 0 1px rgba(180,100,120,.16),0 0 80px rgba(180,80,100,.07);
+  animation:popIn .38s cubic-bezier(.34,1.56,.64,1);position:relative;overflow:hidden;
+}
+.secret-card::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,rgba(180,80,120,.08),transparent 60%);}
+.s-lock {font-size:2.8rem;margin-bottom:10px;}
+.s-title{font-family:var(--font-display);font-size:clamp(1.15rem,3vw,1.42rem);font-style:italic;color:rgba(255,200,220,.88);margin-bottom:18px;}
+.s-text {font-family:var(--font-elegant);font-size:clamp(.9rem,2.5vw,1.02rem);font-style:italic;line-height:1.85;color:rgba(220,190,210,.72);white-space:pre-line;}
+.secret-close-btn{
+  display:block;margin:22px auto 0;padding:10px 28px;
+  background:linear-gradient(135deg,#c85878,#e87898);border:none;border-radius:8px;
+  color:#fff;font-family:var(--font-body);font-style:italic;font-size:.9rem;cursor:pointer;
+  box-shadow:0 4px 16px rgba(200,88,120,.36);transition:transform .2s;
+  -webkit-tap-highlight-color:transparent;
+}
+.secret-close-btn:hover {transform:translateY(-2px);}
+.secret-close-btn:active{transform:scale(.96);}
+
+/* Scrollbars */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,.04)}
+::-webkit-scrollbar-thumb{background:rgba(200,160,80,.26);border-radius:2px}
+
+/* ─────────────────────────────────────────────────────
+   MOBILE
+───────────────────────────────────────────────────── */
+@media(max-width:600px){
+  .room-window{top:3%;right:3%;}
+  .room-candle{left:3%;bottom:23%;}
+  #gift1{top:10%;left:3%;}
+  #gift2{top:10%;right:3%;}
+  #gift3{top:56%;left:2%;}
+  #gift4{top:56%;right:2%;}
+  #gift5{top:80%;left:40%;}
+  .vault-wrap{bottom:18%;right:3%;}
+  .note-card{width:88vw;}
+  .open-book{flex-direction:column;height:auto;max-height:88vh;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+  .page-l{border-radius:16px 16px 0 0;border-right:none;border-bottom:2px solid rgba(180,140,80,.2);}
+  .page-r{border-radius:0 0 16px 16px;}
+  .book-spine{width:100%;height:14px;}
+  .spine-text{writing-mode:horizontal-tb;font-size:.46rem;}
+}
+@media(max-width:380px){
+  .gift-box{width:54px;height:50px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════  PHASE 1 — BOOT  ══════════════════════════ -->
+<div id="phase1" class="phase active">
+  <div id="p1Stars"></div>
+  <div class="p1-moon"></div>
+  <div class="p1-landscape"></div>
+  <div class="p1-glow"></div>
+  <div class="p1-content">
+    <div class="p1-icon">🌸</div>
+    <div class="p1-title">Loading something special for you...</div>
+    <div class="loader-wrap">
+      <div class="loader-track"><div class="loader-fill" id="loaderFill"></div></div>
+      <div class="loader-text" id="loaderText">Warming up the stars...</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════  PHASE 2 — ROOM  ══════════════════════════ -->
+<div id="phase2" class="phase">
+  <!-- purely decorative — pointer-events:none -->
+  <div class="room-bg"></div>
+  <div class="room-window"><div class="window-cross"></div></div>
+  <div class="room-floor"></div>
+  <div class="room-rug"></div>
+  <div id="p2Stars"></div>
+  <div id="p2Particles"></div>
+  <div class="room-candle">
+    <div class="candle-flame-wrap">
+      <div class="candle-glow"></div>
+      <div class="candle-flame"><div class="candle-flame-inner"></div></div>
+    </div>
+    <div class="candle-body"></div>
+    <div class="candle-wax"></div>
+  </div>
+
+  <!-- Note — purely visual, pointer-events:none -->
+  <div class="note-card">
+    <div class="note-glow"></div>
+    <div class="note-inner">
+      <div class="note-label">♡ &nbsp; A Note for You &nbsp; ♡</div>
+      <div class="note-title">To the one who lights up my world,</div>
+      <p class="note-text">You walked into my life and rearranged everything — not loudly, but the way sunlight rearranges a room. You are, without question, the most extraordinary thing that has ever happened to me. Every memory we've made together is something I return to on ordinary days, just to feel the warmth of them. You've shown me what it means to be truly known. I wrote this little world for you today, because you deserve magic, always. Here — explore it. It was all made with love. ✨</p>
+      <div class="note-sig">With everything I have, always.</div>
+    </div>
+  </div>
+
+  <!-- Gifts — z-index:40, fully clickable -->
+  <div class="gift-box" id="gift1" data-idx="0"><div class="gift-lid"><div class="gift-bow"></div></div><div class="gift-body"><div class="gift-ribbon-h"></div><div class="gift-ribbon-v"></div></div></div>
+  <div class="gift-box" id="gift2" data-idx="1"><div class="gift-lid"><div class="gift-bow"></div></div><div class="gift-body"><div class="gift-ribbon-h"></div><div class="gift-ribbon-v"></div></div></div>
+  <div class="gift-box" id="gift3" data-idx="2"><div class="gift-lid"><div class="gift-bow"></div></div><div class="gift-body"><div class="gift-ribbon-h"></div><div class="gift-ribbon-v"></div></div></div>
+  <div class="gift-box" id="gift4" data-idx="3"><div class="gift-lid"><div class="gift-bow"></div></div><div class="gift-body"><div class="gift-ribbon-h"></div><div class="gift-ribbon-v"></div></div></div>
+  <div class="gift-box" id="gift5" data-idx="4"><div class="gift-lid"><div class="gift-bow"></div></div><div class="gift-body"><div class="gift-ribbon-h"></div><div class="gift-ribbon-v"></div></div></div>
+
+  <!-- Vault — z-index:40, fully clickable -->
+  <div class="vault-wrap" id="vaultBtn">
+    <div class="vault-hint">psst… something's hiding here</div>
+    <div class="vault-outer"><div class="vault-dial"></div><div class="vault-handle"></div></div>
+    <div class="vault-label">SECRET VAULT</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════  PHASE 3 — NEBULA  ════════════════════════ -->
+<div id="phase3" class="phase">
+  <canvas id="nebulaCanvas"></canvas>
+  <div class="p3-content">
+    <div class="p3-eyebrow">✦ &nbsp; still here &nbsp; ✦</div>
+    <div class="p3-msg">"Woah, a long time has passed<br>without you. I missed you a lot.<br>Hope you're doing okay."</div>
+    <div class="p3-dots" id="p3Dots">
+      <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
+      <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════  PHASE 4 — BOOK  ═════════════════════════ -->
+<div id="phase4" class="phase">
+  <div class="p4-bg"></div>
+  <div id="p4Stars"></div>
+  <div class="open-book">
+    <div class="page-l">
+      <div class="page-l-inner">
+        <div class="page-ornament">❦</div>
+        <div class="page-l-title">A Final Chapter</div>
+        <div class="page-l-date" id="p4Date"></div>
+        <div class="page-l-deco">
+          <div class="page-rose">🌹</div>
+          <div class="page-l-quote">"Some people arrive and make such a beautiful impact on your life, you can barely remember what life was like without them."</div>
+          <div class="page-stars">✦ ✦ ✦ ✦ ✦</div>
+        </div>
+      </div>
+    </div>
+    <div class="book-spine"><div class="spine-text">FOR YOU · WITH LOVE · ALWAYS</div></div>
+    <div class="page-r">
+      <div class="page-r-inner">
+        <div class="page-r-label">✦ &nbsp; Two things I made just for you</div>
+        <div class="page-r-title">Open what's yours.</div>
+        <div class="page-divider"></div>
+        <div class="book-btns">
+          <button class="book-btn btn-poem" id="poemBtn" type="button">
+            <span class="btn-icon">📜</span>The Poem
+            <span class="btn-sub">written from the heart · just for you</span>
+          </button>
+          <button class="book-btn btn-secret" id="secretBtn" type="button">
+            <span class="btn-icon">🔐</span>Secret Message
+            <span class="btn-sub">just for you · you'll know why</span>
+          </button>
+        </div>
+        <div class="page-r-footer">You're loved beyond words, always.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════  MODALS — fixed z-index:500, outside all phases  ══════════════ -->
+
+<!-- Gift Modal -->
+<div class="modal-bg" id="giftModal">
+  <div class="modal-card">
+    <span class="m-close" id="giftClose">✕</span>
+    <div class="m-icon" id="giftIcon">🎁</div>
+    <p  class="m-msg"  id="giftMsg"></p>
+    <p  class="m-tag"  id="giftTag"></p>
+  </div>
+</div>
+
+<!-- Vault Modal -->
+<div class="modal-bg" id="vaultModal">
+  <div class="vault-modal-card">
+    <span class="m-close" id="vaultClose">✕</span>
+    <div class="v-icon">🔒</div>
+    <h3 class="v-title">The Secret Vault</h3>
+    <p class="v-hint">This vault holds something very special…<br>To enter, answer one question:<br><em>Think of your favourite F1 driver. 🏎️</em></p>
+    <input type="text" id="vaultInput" placeholder="Type their name…" autocomplete="off" spellcheck="false">
+    <button id="vaultSubmit" type="button">Open the Vault ✨</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="poemModal">
+  <div class="scroll-card">
+    <div class="scroll-title">A Poem, For You 🌙</div>
+    <div class="scroll-div">✦</div>
+    <div class="poem-text">
+Within the quiet of ordinary days,
+You are the extraordinary thing 
+The warmth behind the winter haze,
+The song I didn't know I'd sing.
+I've watched you carry heavy skies
+With grace I cannot understand,
+And loved you with my open eyes
+For every moment, as I stand.
+You are the reason gentleness
+Still feels like something worth the try 
+You are the light I must confess
+I'd follow past the edge of sky.
+Happy birthday, to the one who makes
+The world feel like it's worth the weight.
+For every dream you dare to chase,
+I'll be right there...never late.
+
+— ✨Hehe, I've another one! ✨
+
+A confession that took courage.
+A gentle “not ready.”
+A month later, silence.
+A district final.
+
+A free kick from 20–25 yards.
+The net shaking.
+Tears after the whistle.
+Her voice when I was crying.
+Calm. Warm. Patient.
+
+Talking about life like time had stopped.
+Three matches.
+Six goals.
+A hat-trick.
+A brace.
+One in the final.
+
+Late talks.
+Being understood without needing to explain.
+Feeling seen.
+Loving without conditions.
+Learning how to care about everyone because of one person.
+Dreams shared quietly.
+Oxford.
+
+A future spoken softly.
+Effort that felt effortless.
+Learning languages.
+Building something with my hands and heart.
+Choosing not to go back.
+
+Not because I couldn’t
+but because I cared.
+Wishing her success from a distance.
+Wanting her happy, even without me.
+Calling it a dream.
+A beautiful one.
+Letting it rest.
+    </div>
+    <button class="scroll-close-btn" id="poemClose" type="button">Close ✨</button>
+  </div>
+</div>
+
+<!-- Secret Modal -->
+<div class="modal-bg" id="secretModal">
+  <div class="secret-card">
+    <div class="s-lock">🔐</div>
+    <div class="s-title">Just For You.</div>
+    <div class="s-text">
+Wassuuupp!! How you doing these days? I guess you found someone, hahaha. That's great, and I wish y'all a happy and a loving future.
+But beside all this, I just want to tell you that I'm still here for you no matter what
+I know you don't love me the same anymore but my love for you is increasing every day and I don't want to affect your relationship with him but I just want to tell you that I'm still there,
+I still love you no matter what and I've one question that why did you do that to me without telling me anything? Tell me only if you're comfortable
+I'm not forcing you. But you know, there's not a single day I haven't thought of you and I've a poem for you too
+if you want then I could narrate it to you[I already did, its the message I wrote before the poem and after you left me].......
+that was all I had to say, thank you so much for your precious time,
+take care and all the best for your future and may God give you the strength to fight all the difficulties in you life.
+.....I let you go not because I stopped loving you
+but because loving you meant choosing your peace and my growth........Good Bye..
+    </div>
+    <button class="secret-close-btn" id="secretClose" type="button">Close 🌸</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════  JAVASCRIPT  ══════════════════════════ -->
+<script>
+'use strict';
+
+/* ────────────────────────────────
+   GIFT DATA  (edit freely)
+──────────────────────────────── */
+const GIFTS = [
+  { icon:'🌸', msg:'Your smile is the most beautiful thing I have ever had the privilege of witnessing. Truly.',                                               tag:'— gift no. 1' },
+  { icon:'✨', msg:'You are braver, stronger, and more extraordinary than you ever give yourself credit for. I have seen it every single day.',                     tag:'— gift no. 2' },
+  { icon:'🌙', msg:'Every ordinary moment with you feels like a quiet, private miracle. I would not trade a single second of it.',                            tag:'— gift no. 3' },
+  { icon:'💛', msg:'You make me want to be better not because I feel less, but because being you makes everything feel more possible.',              tag:'— gift no. 4' },
+  { icon:'🌹', msg:'In every version of every life, I would find my way back to you. Always. Without question. Always.',                                     tag:'— gift no. 5' },
+];
+
+/* ────────────────────────────────
+   HELPERS
+──────────────────────────────── */
+const $ = id => document.getElementById(id);
+
+/* ────────────────────────────────
+   AUDIO — soft ambient drone
+──────────────────────────────── */
+let actx = null, mgain = null, audioOn = false;
+function startAudio() {
+  if (audioOn) return;
+  try {
+    actx  = new (window.AudioContext || window.webkitAudioContext)();
+    mgain = actx.createGain(); mgain.gain.value = 0; mgain.connect(actx.destination);
+    [{f:110,g:.03},{f:164.8,g:.02},{f:220,g:.016},{f:329.6,g:.012},{f:440,g:.007}].forEach(({f,g}) => {
+      const o = actx.createOscillator(), gn = actx.createGain();
+      o.type='sine'; o.frequency.value=f; gn.gain.value=g;
+      o.connect(gn); gn.connect(mgain); o.start();
+    });
+    mgain.gain.setTargetAtTime(1, actx.currentTime, 2.5);
+    audioOn = true;
+  } catch(e) {}
+}
+['click','touchstart'].forEach(ev => document.addEventListener(ev, startAudio, {once:true}));
+
+/* ────────────────────────────────
+   PHASE SWITCHING
+   Exactly one phase has class "active".
+   Phases are display:none until active → zero overlap, zero bleed.
+──────────────────────────────── */
+function showPhase(id) {
+  document.querySelectorAll('.phase').forEach(p => p.classList.remove('active'));
+  const el = $(id);
+  el.classList.add('active');
+  if (id === 'phase2') initPhase2();
+  if (id === 'phase3') initPhase3();
+  if (id === 'phase4') initPhase4();
+}
+
+/* ────────────────────────────────
+   MODAL SYSTEM
+   All modals wired once at page-load.
+   .open = display:flex  (toggle, never display:block residue).
+   Closing: close-button OR click on dark overlay background.
+──────────────────────────────── */
+function openModal(id)  { $(id).classList.add('open'); }
+function closeModal(id) { $(id).classList.remove('open'); }
+
+function wireModal(modalId, closeBtnId) {
+  const modal   = $(modalId);
+  const closeBtn = $(closeBtnId);
+
+  // ── Close button (click + touchend for mobile)
+  function doClose(e) { e.stopPropagation(); e.preventDefault(); closeModal(modalId); }
+  closeBtn.addEventListener('click',   doClose);
+  closeBtn.addEventListener('touchend', doClose, {passive:false});
+
+  // ── Click on the dark overlay itself (not on the card inside)
+  modal.addEventListener('click', e => { if (e.target === modal) closeModal(modalId); });
+
+  // ── Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(modalId);
+  });
+}
+
+// Wire all modals NOW — they exist in the DOM from the start
+wireModal('giftModal',   'giftClose');
+wireModal('vaultModal',  'vaultClose');
+wireModal('poemModal',   'poemClose');
+wireModal('secretModal', 'secretClose');
+
+/* ────────────────────────────────
+   PHASE 1 — BOOT LOADER
+──────────────────────────────── */
+;(function initPhase1() {
+  // Stars
+  const wrap = $('p1Stars');
+  for (let i = 0; i < 120; i++) {
+    const s = document.createElement('div'); s.className = 'boot-star';
+    const sz = Math.random()*2.5+.5;
+    s.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*72}%;--d:${2+Math.random()*4}s;--dl:${Math.random()*4}s;--mo:${.4+Math.random()*.55};`;
+    wrap.appendChild(s);
+  }
+
+  const fill = $('loaderFill'), txt = $('loaderText');
+  let w = 0, mi = 0;
+  const MSGS = ['Warming up the stars...','Brewing something warm...','Counting every reason...','Folding paper stars...','Calibrating Love... 88%'];
+  function setMsg(t) { txt.style.opacity='0'; setTimeout(() => { txt.textContent=t; txt.style.opacity='1'; }, 300); }
+
+  // Crawl 0→88
+  const iv1 = setInterval(() => {
+    w = Math.min(88, w + Math.random()*2.8+.7);
+    fill.style.width = w+'%';
+    const want = Math.min(MSGS.length-1, Math.floor((w/88)*(MSGS.length-1)));
+    if (want !== mi) { mi = want; setMsg(MSGS[mi]); }
+    if (w >= 88) clearInterval(iv1);
+  }, 60);
+
+  // Pause, then sprint 88→100
+  setTimeout(() => {
+    setMsg('Ready. ✨');
+    setTimeout(() => {
+      const iv2 = setInterval(() => {
+        w = Math.min(100, w+2);
+        fill.style.width = w+'%';
+        if (w >= 100) { clearInterval(iv2); setTimeout(() => showPhase('phase2'), 520); }
+      }, 22);
+    }, 1100);
+  }, 3800);
+})();
+
+/* ────────────────────────────────
+   PHASE 2 — COZY ROOM
+   Gifts and vault are wired here.
+   Note card has pointer-events:none in CSS — it intercepts NOTHING.
+──────────────────────────────── */
+let p2Done = false;
+function initPhase2() {
+  if (p2Done) return; p2Done = true;
+
+  // Room stars
+  const sw = $('p2Stars');
+  for (let i=0;i<80;i++) {
+    const s = document.createElement('div'); s.className='room-star';
+    const sz = Math.random()*2+.4;
+    s.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*62}%;--d:${2+Math.random()*5}s;--dl:${Math.random()*5}s;--mo:${.12+Math.random()*.42};`;
+    sw.appendChild(s);
+  }
+
+  // Particles
+  const pw = $('p2Particles');
+  for (let i=0;i<22;i++) {
+    const p = document.createElement('div'); p.className='particle';
+    const sz = Math.random()*3+1;
+    p.style.cssText=`width:${sz}px;height:${sz}px;left:${3+Math.random()*28}%;bottom:${17+Math.random()*32}%;--d:${4+Math.random()*6}s;--dl:${Math.random()*8}s;--dx:${(Math.random()-.5)*36}px;`;
+    pw.appendChild(p);
+  }
+
+  // ── GIFTS ──────────────────────────────────────────────
+  // Each gift: click + touchend → open gift modal.
+  // stopPropagation ensures the event stays on the gift element only.
+  document.querySelectorAll('.gift-box').forEach(box => {
+    const idx = parseInt(box.dataset.idx, 10);
+
+    function openGift(e) {
+      e.stopPropagation();
+      if (e.type === 'touchend') e.preventDefault();
+      const d = GIFTS[idx];
+      $('giftIcon').textContent = d.icon;
+      $('giftMsg').textContent  = d.msg;
+      $('giftTag').textContent  = d.tag;
+      openModal('giftModal');
+    }
+
+    box.addEventListener('click',    openGift);
+    box.addEventListener('touchend', openGift, {passive:false});
+  });
+
+  // ── VAULT ───────────────────────────────────────────────
+  function openVault(e) {
+    e.stopPropagation();
+    if (e.type === 'touchend') e.preventDefault();
+    $('vaultInput').value = '';
+    openModal('vaultModal');
+    setTimeout(() => $('vaultInput').focus(), 150);
+  }
+
+  const vb = $('vaultBtn');
+  vb.addEventListener('click',    openVault);
+  vb.addEventListener('touchend', openVault, {passive:false});
+
+  // Vault submit — ANY text → close modal → phase 3
+  function doVault() {
+    if (!$('vaultInput').value.trim()) return;
+    closeModal('vaultModal');
+    setTimeout(() => showPhase('phase3'), 320);
+  }
+  $('vaultSubmit').addEventListener('click',  e => { e.stopPropagation(); doVault(); });
+  $('vaultInput').addEventListener('keydown', e => { if (e.key==='Enter') doVault(); });
+}
+
+/* ────────────────────────────────
+   PHASE 3 — NEBULA INTERSTITIAL
+──────────────────────────────── */
+let p3Done = false;
+function initPhase3() {
+  if (p3Done) return; p3Done = true;
+
+  const canvas = $('nebulaCanvas'), ctx = canvas.getContext('2d');
+  canvas.width = innerWidth; canvas.height = innerHeight;
+  const W=canvas.width, H=canvas.height;
+
+  const COLS=[[120,80,200],[80,100,200],[180,80,140],[60,140,180],[200,160,240],[240,220,255]];
+  const pts = Array.from({length:600}, () => {
+    const a=Math.random()*Math.PI*2, tR=Math.random()*Math.min(W,H)*.44;
+    return {a,tR,cR:tR*.04,r:Math.random()*5+.7,sp:.13+Math.random()*.36,
+            col:COLS[Math.floor(Math.random()*COLS.length)],
+            alpha:0,tA:.36+Math.random()*.52,spin:(Math.random()-.5)*.004};
+  });
+
+  let raf;
+  (function draw() {
+    ctx.fillStyle='rgba(8,5,15,.17)'; ctx.fillRect(0,0,W,H);
+    pts.forEach(p => {
+      p.cR=Math.min(p.cR+p.sp*.8,p.tR); p.a+=p.spin; p.alpha=Math.min(p.alpha+.007,p.tA);
+      ctx.save(); ctx.globalAlpha=p.alpha; ctx.shadowBlur=11;
+      ctx.shadowColor=`rgb(${p.col[0]},${p.col[1]},${p.col[2]})`;
+      ctx.beginPath(); ctx.arc(W/2+Math.cos(p.a)*p.cR,H/2+Math.sin(p.a)*p.cR,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${p.col[0]},${p.col[1]},${p.col[2]},1)`; ctx.fill(); ctx.restore();
+    });
+    raf=requestAnimationFrame(draw);
+  })();
+
+  // Dot timer
+  const dots=[...$('p3Dots').querySelectorAll('.dot')]; let di=0;
+  const iv=setInterval(()=>{
+    dots.forEach(d=>d.classList.remove('on'));
+    if(di<dots.length) dots[di++].classList.add('on'); else clearInterval(iv);
+  },900);
+
+  // Auto-advance after 6s
+  setTimeout(()=>{ cancelAnimationFrame(raf); showPhase('phase4'); },6000);
+}
+
+/* ────────────────────────────────
+   PHASE 4 — OPEN BOOK
+   Poem + Secret buttons wired here.
+   Modals already have close listeners (from wireModal above).
+──────────────────────────────── */
+let p4Done = false;
+function initPhase4() {
+  if (p4Done) return; p4Done = true;
+
+  $('p4Date').textContent = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+
+  // Stars
+  const sw = $('p4Stars');
+  for(let i=0;i<100;i++){
+    const s=document.createElement('div'); const sz=Math.random()*2+.4;
+    s.style.cssText=`position:absolute;width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;background:#fff;border-radius:50%;animation:roomTwinkle ${2+Math.random()*4}s ease-in-out infinite ${Math.random()*4}s;--mo:${.13+Math.random()*.4};`;
+    sw.appendChild(s);
+  }
+
+  // Poem button
+  function openPoem(e) { e.stopPropagation(); if(e.type==='touchend') e.preventDefault(); openModal('poemModal'); }
+  $('poemBtn').addEventListener('click',    openPoem);
+  $('poemBtn').addEventListener('touchend', openPoem, {passive:false});
+
+  // Secret button
+  function openSecret(e) { e.stopPropagation(); if(e.type==='touchend') e.preventDefault(); openModal('secretModal'); }
+  $('secretBtn').addEventListener('click',    openSecret);
+  $('secretBtn').addEventListener('touchend', openSecret, {passive:false});
+}
+
+/* Resize nebula canvas */
+window.addEventListener('resize',()=>{
+  const c=$('nebulaCanvas');
+  if(c && $('phase3').classList.contains('active')){ c.width=innerWidth; c.height=innerHeight; }
+});
+</script>
+</body>
+</html>
